@@ -8,7 +8,6 @@ FILE_PENGHUNI = "penghuni.json"
 # ==========================
 # LOAD PENYEWAAN
 # ==========================
-
 def load_penyewaan():
 
     try:
@@ -22,7 +21,6 @@ def load_penyewaan():
 # ==========================
 # SAVE PENYEWAAN
 # ==========================
-
 def save_penyewaan(data):
 
     with open(FILE_SEWA, "w") as file:
@@ -32,7 +30,6 @@ def save_penyewaan(data):
 # ==========================
 # LOAD KAMAR
 # ==========================
-
 def load_kamar():
 
     try:
@@ -46,7 +43,6 @@ def load_kamar():
 # ==========================
 # SAVE KAMAR
 # ==========================
-
 def save_kamar(data):
 
     with open(FILE_KAMAR, "w") as file:
@@ -56,7 +52,6 @@ def save_kamar(data):
 # ==========================
 # LOAD PENGHUNI
 # ==========================
-
 def load_penghuni():
 
     try:
@@ -70,7 +65,6 @@ def load_penghuni():
 # ==========================
 # SAVE PENGHUNI
 # ==========================
-
 def save_penghuni(data):
 
     with open(FILE_PENGHUNI, "w") as file:
@@ -78,9 +72,8 @@ def save_penghuni(data):
 
 
 # ==========================
-# EDIT STATUS PENYEWAAN
+# EDIT PENYEWAAN
 # ==========================
-
 def edit_penyewaan():
 
     data = load_penyewaan()
@@ -103,38 +96,29 @@ def edit_penyewaan():
             pilihan = input("Pilih Status Baru : ")
 
             if pilihan == "1":
-
                 sewa["status"] = "Aktif"
 
             elif pilihan == "2":
-
                 sewa["status"] = "Selesai"
 
             else:
-
                 print("PILIHAN TIDAK VALID")
                 return
 
             save_penyewaan(data)
 
-            print(
-                "STATUS PENYEWAAN BERHASIL DIUBAH"
-            )
+            print("STATUS PENYEWAAN BERHASIL DIUBAH")
 
             ditemukan = True
             break
 
     if ditemukan == False:
-
-        print(
-            "ID SEWA TIDAK DITEMUKAN"
-        )
+        print("ID SEWA TIDAK DITEMUKAN")
 
 
 # ==========================
 # PENGHUNI KELUAR
 # ==========================
-
 def penghuni_keluar():
 
     penyewaan = load_penyewaan()
@@ -143,9 +127,7 @@ def penghuni_keluar():
 
     print("\n===== PENGHUNI KELUAR =====")
 
-    id_sewa = input(
-        "Masukkan ID Sewa : "
-    ).upper()
+    id_sewa = input("Masukkan ID Sewa : ").upper()
 
     ditemukan = False
 
@@ -153,34 +135,25 @@ def penghuni_keluar():
 
         if data_sewa["id_sewa"] == id_sewa:
 
-            if data_sewa["status"] == "Selesai":
-
-                print(
-                    "PENYEWAAN SUDAH SELESAI"
-                )
-                return
+            # Status Penyewaan
+            data_sewa["status"] = "Selesai"
 
             id_kamar = data_sewa["id_kamar"]
             id_penghuni = data_sewa["id_penghuni"]
 
-            # STATUS PENYEWAAN
-            data_sewa["status"] = "Selesai"
-
-            # STATUS KAMAR
+            # Status Kamar
             for data_kamar in kamar:
 
                 if data_kamar["id_kamar"] == id_kamar:
 
                     data_kamar["status"] = "Kosong"
-                    break
 
-            # STATUS PENGHUNI
+            # Status Penghuni
             for data_penghuni in penghuni:
 
                 if data_penghuni["id_penghuni"] == id_penghuni:
 
                     data_penghuni["status"] = "Tidak Aktif"
-                    break
 
             save_penyewaan(penyewaan)
             save_kamar(kamar)
@@ -195,33 +168,25 @@ def penghuni_keluar():
             break
 
     if ditemukan == False:
-
-        print(
-            "ID SEWA TIDAK DITEMUKAN"
-        )
+        print("ID SEWA TIDAK DITEMUKAN")
 
 
 # ==========================
 # RIWAYAT PENYEWAAN
 # ==========================
-
 def riwayat_penyewaan():
 
     data = load_penyewaan()
 
     print("\n================================================================================")
-    print(" RIWAYAT PENYEWAAN ")
+    print("                             RIWAYAT PENYEWAAN")
     print("================================================================================")
     print(f"{'ID':<8}{'PENGHUNI':<20}{'KAMAR':<10}{'STATUS'}")
     print("================================================================================")
 
-    ada_data = False
-
     for sewa in data:
 
         if sewa["status"] == "Selesai":
-
-            ada_data = True
 
             print(
                 f"{sewa['id_sewa']:<8}"
@@ -230,6 +195,4 @@ def riwayat_penyewaan():
                 f"{sewa['status']}"
             )
 
-    if ada_data == False:
-        print(    "BELUM ADA RIWAYAT PENYEWAAN"    )
     print("================================================================================")
