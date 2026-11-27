@@ -1,27 +1,40 @@
-
 import json
 
 FILE_PENGHUNI = "penghuni.json"
 
 
+# ==========================
+# LOAD PENGHUNI
+# ==========================
 def load_penghuni():
+
     try:
         with open(FILE_PENGHUNI, "r") as file:
             return json.load(file)
+
     except FileNotFoundError:
         return []
 
+
+# ==========================
+# SAVE PENGHUNI
+# ==========================
 def save_penghuni(data):
+
     with open(FILE_PENGHUNI, "w") as file:
         json.dump(data, file, indent=4)
 
 
+# ==========================
+# EDIT PENGHUNI
+# ==========================
 def edit_penghuni():
+
     data = load_penghuni()
+
     print("\n===== EDIT PENGHUNI =====")
-    id_penghuni = input(
-        "Masukkan ID Penghuni : "
-    ).upper()
+
+    id_penghuni = input("Masukkan ID Penghuni : ").upper()
 
     ditemukan = False
 
@@ -34,9 +47,12 @@ def edit_penghuni():
             print("Umur :", penghuni["umur"])
             print("Jenis Kelamin :", penghuni["jenis_kelamin"])
 
-            nama_baru = input(
-                "\nMasukkan Nama Baru : "
-            )
+            nama_baru = input("\nMasukkan Nama Baru : ")
+
+            if nama_baru == "":
+
+                print("NAMA TIDAK BOLEH KOSONG")
+                return
 
             try:
 
@@ -44,13 +60,14 @@ def edit_penghuni():
                     input("Masukkan Umur Baru : ")
                 )
 
-                if umur_baru <= 0:
-                    print("UMUR TIDAK VALID")
-                    return
-
             except:
 
                 print("UMUR HARUS ANGKA")
+                return
+
+            if umur_baru <= 0:
+
+                print("UMUR HARUS LEBIH DARI 0")
                 return
 
             print("\n1. Laki-laki")
@@ -77,30 +94,27 @@ def edit_penghuni():
 
             save_penghuni(data)
 
-            print(
-                "\nDATA BERHASIL DIUBAH"
-            )
+            print("\nDATA BERHASIL DIUBAH")
 
             ditemukan = True
             break
 
     if ditemukan == False:
 
-        print(
-            "ID PENGHUNI TIDAK DITEMUKAN"
-        )
+        print("ID PENGHUNI TIDAK DITEMUKAN")
 
 
-
+# ==========================
+# HAPUS PENGHUNI
+# (DINONAKTIFKAN)
+# ==========================
 def hapus_penghuni():
 
     data = load_penghuni()
 
     print("\n===== HAPUS PENGHUNI =====")
 
-    id_penghuni = input(
-        "Masukkan ID Penghuni : "
-    ).upper()
+    id_penghuni = input("Masukkan ID Penghuni : ").upper()
 
     ditemukan = False
 
@@ -118,34 +132,30 @@ def hapus_penghuni():
 
                 save_penghuni(data)
 
-                print(
-                    "PENGHUNI BERHASIL DINONAKTIFKAN"
-                )
+                print("PENGHUNI BERHASIL DINONAKTIFKAN")
 
             else:
 
-                print(
-                    "PROSES DIBATALKAN"
-                )
+                print("PROSES DIBATALKAN")
 
             ditemukan = True
             break
 
     if ditemukan == False:
 
-        print(
-            "ID PENGHUNI TIDAK DITEMUKAN"
-        )
+        print("ID PENGHUNI TIDAK DITEMUKAN")
 
+
+# ==========================
+# STATUS PENGHUNI
+# ==========================
 def status_penghuni():
 
     data = load_penghuni()
 
     print("\n===== STATUS PENGHUNI =====")
 
-    id_penghuni = input(
-        "Masukkan ID Penghuni : "
-    ).upper()
+    id_penghuni = input("Masukkan ID Penghuni : ").upper()
 
     ditemukan = False
 
@@ -153,17 +163,12 @@ def status_penghuni():
 
         if penghuni["id_penghuni"] == id_penghuni:
 
-            print(
-                "\nStatus Saat Ini :",
-                penghuni["status"]
-            )
+            print("\nStatus Saat Ini :", penghuni["status"])
 
             print("1. Aktif")
             print("2. Tidak Aktif")
 
-            pilihan = input(
-                "Pilih Status : "
-            )
+            pilihan = input("Pilih Status : ")
 
             if pilihan == "1":
 
@@ -180,15 +185,11 @@ def status_penghuni():
 
             save_penghuni(data)
 
-            print(
-                "STATUS BERHASIL DIUBAH"
-            )
+            print("STATUS BERHASIL DIUBAH")
 
             ditemukan = True
             break
 
     if ditemukan == False:
 
-        print(
-            "ID PENGHUNI TIDAK DITEMUKAN"
-        )
+        print("ID PENGHUNI TIDAK DITEMUKAN")
