@@ -1,3 +1,4 @@
+
 import json
 
 FILE_KAMAR = "kamar.json"
@@ -6,39 +7,33 @@ FILE_KAMAR = "kamar.json"
 # ==========================
 # LOAD DATA KAMAR
 # ==========================
-
 def load_kamar():
 
     try:
-
         with open(FILE_KAMAR, "r") as file:
             return json.load(file)
 
     except FileNotFoundError:
 
         data_awal = [
-
             {
                 "id_kamar": "K01",
                 "tipe": "Kamar Mandi Dalam",
                 "harga": 1000000,
                 "status": "Kosong"
             },
-
             {
                 "id_kamar": "K02",
                 "tipe": "Kamar Mandi Luar",
                 "harga": 500000,
                 "status": "Kosong"
             },
-
             {
                 "id_kamar": "K03",
                 "tipe": "Kamar Mandi Dalam",
                 "harga": 1000000,
                 "status": "Kosong"
             }
-
         ]
 
         save_kamar(data_awal)
@@ -47,9 +42,8 @@ def load_kamar():
 
 
 # ==========================
-# SAVE DATA KAMAR
+# SIMPAN DATA KAMAR
 # ==========================
-
 def save_kamar(data):
 
     with open(FILE_KAMAR, "w") as file:
@@ -59,7 +53,6 @@ def save_kamar(data):
 # ==========================
 # TAMBAH KAMAR
 # ==========================
-
 def tambah_kamar():
 
     data = load_kamar()
@@ -68,12 +61,10 @@ def tambah_kamar():
 
     while True:
 
-        id_kamar = input(
-            "Masukkan ID Kamar : "
-        ).upper()
+        id_kamar = input("Masukkan ID Kamar : ").upper()
 
         if id_kamar == "":
-            print("ID KAMAR TIDAK BOLEH KOSONG")
+            print("ID KAMAR TIDAK BOLEH KOSONG!")
             continue
 
         id_sudah_ada = False
@@ -85,9 +76,7 @@ def tambah_kamar():
                 break
 
         if id_sudah_ada:
-
-            print("ID SUDAH DIGUNAKAN")
-
+            print("ID KAMAR SUDAH DIGUNAKAN, MOHON MASUKKAN ID YANG LAIN")
         else:
             break
 
@@ -97,28 +86,22 @@ def tambah_kamar():
 
     while True:
 
-        pilihan = input(
-            "Masukkan Pilihan : "
-        )
+        pilihan = input("Masukkan Pilihan : ")
 
         if pilihan == "1":
-
             tipe = "Kamar Mandi Dalam"
             harga = 1000000
             break
 
         elif pilihan == "2":
-
             tipe = "Kamar Mandi Luar"
             harga = 500000
             break
 
         else:
-
-            print("PILIHAN TIDAK VALID")
+            print("PILIHAN TIDAK VALID!")
 
     kamar_baru = {
-
         "id_kamar": id_kamar,
         "tipe": tipe,
         "harga": harga,
@@ -129,61 +112,44 @@ def tambah_kamar():
 
     save_kamar(data)
 
-    print("\nKAMAR BERHASIL DITAMBAHKAN")
+    print("\nKAMAR BERHASIL DITAMBAHKAN!")
 
 
 # ==========================
-# DAFTAR KAMAR
+# LIHAT DAFTAR KAMAR
 # ==========================
-
 def lihat_daftar_kamar():
 
     data = load_kamar()
 
-    print("\n====================================================================")
-    print(" DAFTAR KAMAR ")
-    print("====================================================================")
+    print("\n===================================================================")
+    print("                           DAFTAR KAMAR")
+    print("===================================================================")
+    print(f"{'ID':<10}{'TIPE':<25}{'HARGA':<15}{'STATUS'}")
+    print("===================================================================")
 
-    print(
-        f"{'ID':<10}"
-        f"{'TIPE':<25}"
-        f"{'HARGA':<15}"
-        f"{'STATUS'}"
-    )
+    for kamar in data:
 
-    print("====================================================================")
+        print(
+            f"{kamar['id_kamar']:<10}"
+            f"{kamar['tipe']:<25}"
+            f"{kamar['harga']:<15}"
+            f"{kamar['status']}"
+        )
 
-    if len(data) == 0:
-
-        print("BELUM ADA DATA KAMAR")
-
-    else:
-
-        for kamar in data:
-
-            print(
-                f"{kamar['id_kamar']:<10}"
-                f"{kamar['tipe']:<25}"
-                f"{kamar['harga']:<15}"
-                f"{kamar['status']}"
-            )
-
-    print("====================================================================")
+    print("===================================================================")
 
 
 # ==========================
-# CARI KAMAR
+# CARI KAMAR BERDASARKAN ID
 # ==========================
-
 def cari_kamar():
 
     data = load_kamar()
 
     print("\n===== CARI KAMAR =====")
 
-    id_cari = input(
-        "Masukkan ID Kamar : "
-    ).upper()
+    id_cari = input("Masukkan ID Kamar : ").upper()
 
     ditemukan = False
 
@@ -192,26 +158,10 @@ def cari_kamar():
         if kamar["id_kamar"] == id_cari:
 
             print("\n===== INFORMASI KAMAR =====")
-
-            print(
-                "ID Kamar :",
-                kamar["id_kamar"]
-            )
-
-            print(
-                "Tipe :",
-                kamar["tipe"]
-            )
-
-            print(
-                "Harga : Rp",
-                kamar["harga"]
-            )
-
-            print(
-                "Status :",
-                kamar["status"]
-            )
+            print("ID Kamar :", kamar["id_kamar"])
+            print("Tipe     :", kamar["tipe"])
+            print("Harga    :", kamar["harga"])
+            print("Status   :", kamar["status"])
 
             ditemukan = True
             break
@@ -223,17 +173,11 @@ def cari_kamar():
 # ==========================
 # STATUS KAMAR
 # ==========================
-
 def status_kamar():
 
     data = load_kamar()
 
     print("\n===== STATUS KAMAR =====")
-
-    if len(data) == 0:
-
-        print("BELUM ADA DATA KAMAR")
-        return
 
     for kamar in data:
 
@@ -242,3 +186,4 @@ def status_kamar():
             ":",
             kamar["status"]
         )
+
